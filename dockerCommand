@@ -1,0 +1,1 @@
+docker run --name mysql-nestjs-auth -p 5000:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=database -d mysql:8.0.26
