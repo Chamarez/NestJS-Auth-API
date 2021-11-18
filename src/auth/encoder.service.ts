@@ -10,8 +10,10 @@ export class EncoderService {
 
         const salt = await bcrypt.genSalt();
         return await  bcrypt.hash(password, salt);
+    }
 
-
+    async checkPassword(password: string, userPassword:String): Promise<boolean> {
+        return await bcrypt.compare(password, userPassword);
     }
 
 }
