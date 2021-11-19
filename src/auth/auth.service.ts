@@ -6,6 +6,8 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { EncoderService } from './encoder.service';
 import { JwtPayload } from './jwt-payload.interface';
 import { UserRepository } from './users.repository';
+import {v4} from 'uuid';
+
 
 @Injectable()
 export class AuthService {
@@ -22,7 +24,8 @@ export class AuthService {
         async registerUser(registerDto: RegisterUserDto): Promise<void>{
             const {name, email, password} = registerDto
             const hashPassword = await this.encoderService.encodePassword(password)
-            return this.userRepository.createUser(name, email, hashPassword)
+
+            return this.userRepository.createUser(name, email, hashPassword, v4())
         }
 
 
