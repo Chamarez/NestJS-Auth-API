@@ -9,6 +9,7 @@ import { UserRepository } from './users.repository';
 import {v4} from 'uuid';
 import { ActivateUserDto } from './dto/activate-user.dto';
 import { User } from './user.entity';
+import { RequestResetPasswordDto } from './dto/request-reset-password.dto';
 
 
 @Injectable()
@@ -56,4 +57,9 @@ export class AuthService {
 
         }
 
+
+
+        async requestResetPassword(requestResetPasswordDto: RequestResetPasswordDto): Promise<void>{
+            
+        }
 }
