@@ -69,7 +69,11 @@ export class AuthService {
         }
 
         async resetPassword(resetPasswordDto: ResetPasswordDto): Promise<void>{
-            
+            const {resetPasswordToken, password} = resetPasswordDto;
+            const user:User = await this.userRepository.findByResetPasswordToken(resetPasswordToken);
+            user.password = await this.encoderService.encodePassword(password);
+            user.resetPasswordToken = null;
+            this.userRepository.save(user);
 
         }
 
