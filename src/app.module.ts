@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { EncoderService } from './auth/encoder.service';
+import { EncoderService } from './auth/services/encoder.service';
 
 @Module({
   imports: [TypeOrmModule.forRoot({

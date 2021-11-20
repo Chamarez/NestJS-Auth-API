@@ -5,16 +5,16 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LoginDto } from './dto/login.dto';
-import { RegisterUserDto } from './dto/register-user.dto';
+import { LoginDto } from '../dto/login.dto';
+import { RegisterUserDto } from '../dto/register-user.dto';
 import { EncoderService } from './encoder.service';
-import { JwtPayload } from './jwt-payload.interface';
-import { UserRepository } from './users.repository';
+import { JwtPayload } from '../dto/jwt-payload.interface';
+import { UserRepository } from '../repository/users.repository';
 import { v4 } from 'uuid';
-import { ActivateUserDto } from './dto/activate-user.dto';
-import { User } from './user.entity';
-import { RequestResetPasswordDto } from './dto/request-reset-password.dto';
-import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ActivateUserDto } from '../dto/activate-user.dto';
+import { User } from '../models/user.entity';
+import { RequestResetPasswordDto } from '../dto/request-reset-password.dto';
+import { ResetPasswordDto } from '../dto/reset-password.dto';
 
 @Injectable()
 export class AuthService {
