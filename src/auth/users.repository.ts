@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  ConsoleLogger,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
@@ -8,8 +9,6 @@ import { User } from './user.entity';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  
-
   async createUser(
     name: string,
     email: string,
@@ -28,30 +27,30 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-
-  async findOneByEmail(email: string): Promise<User>{
-    const user:User =  await this.findOne({email})
-    if(!user){
-      throw new NotFoundException(`User with email ${email} not found`)
+  async findOneByEmail(email: string): Promise<User> {
+    const user: User = await this.findOne({ email });
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found`);
     }
     return user;
   }
 
-  async activateUser(user:User): Promise<void>{
+  async activateUser(user: User): Promise<void> {
     user.active = true;
     this.save(user);
   }
 
-
-  async findOneInactiveByIDAndActivationTOken(id:string, code:string):Promise<User>{
-    return this.findOne({id:id, activationToken:code, active: false});
+  async findOneInactiveByIDAndActivationTOken(
+    id: string,
+    code: string,
+  ): Promise<User> {
+    return this.findOne({ id: id, activationToken: code, active: false });
   }
 
-
-  async findByResetPasswordToken(resetPasswordToken:string): Promise<User>{
-    const user:User = await this.findOne({resetPasswordToken})
-    if(!user){
-      throw new NotFoundException()
+  async findByResetPasswordToken(resetPasswordToken: string): Promise<User> {
+    const user: User = await this.findOne({ resetPasswordToken });
+    if (!user) {
+      throw new NotFoundException();
     }
     return user;
   }
