@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { LoginDto } from '../dto/login.dto';
 import { RegisterUserDto } from '../dto/register-user.dto';
 import { EncoderService } from './encoder.service';
-import { JwtPayload } from '../dto/jwt-payload.interface';
+import { JwtPayload } from '../Interfaces/jwt-payload.interface';
 import { UserRepository } from '../repository/users.repository';
 import { v4 } from 'uuid';
 import { ActivateUserDto } from '../dto/activate-user.dto';
