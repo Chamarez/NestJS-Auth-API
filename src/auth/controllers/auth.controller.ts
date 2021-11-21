@@ -52,7 +52,8 @@ export class AuthController {
 
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.User)
   async findAll(): Promise<User[]> {
     try {
       return await this.authService.findAll();
