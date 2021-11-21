@@ -16,8 +16,10 @@ import { User } from '../models/user.entity';
 import { RequestResetPasswordDto } from '../dto/request-reset-password.dto';
 import { ResetPasswordDto } from '../dto/reset-password.dto';
 
+
 @Injectable()
 export class AuthService {
+
   constructor(
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
@@ -36,8 +38,8 @@ export class AuthService {
     const { email, password } = loginDto;
     const user = await this.userRepository.findOneByEmail(email);
     if (await this.encoderService.checkPassword(password, user.password)) {
-      const payload: JwtPayload = { id: user.id, email, active: user.active, role: user.role };
-      const accessToken = await this.jwtService.sign(payload);
+      const payload: JwtPayload = { id: user.id, email, active: user.active, roles: user.roles };
+      const accessToken = await this.jwtService.sign(payload, {expiresIn:'24h'});
       return { accessToken };
     }
     throw new UnauthorizedException('Please check your credentials');
@@ -73,4 +75,11 @@ export class AuthService {
     user.resetPasswordToken = null;
     this.userRepository.save(user);
   }
+
+
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.find();
+  }
+
+
 }

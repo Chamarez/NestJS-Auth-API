@@ -4,6 +4,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Role } from '../enums/role.enum';
 
 @Entity()
 export class User {
@@ -19,8 +20,8 @@ export class User {
   @Column({ length: 100 })
   password: string;
 
-  @Column({ length: 10, default: 'user' })
-  role: string ;
+  @Column({ type: 'enum', enum: Role, default: Role.User })
+  roles: Role;
 
   @Column({ type: 'boolean', default: false })
   active: boolean;
@@ -38,4 +39,5 @@ export class User {
 
   @CreateDateColumn({ name: 'created_on' })
   createdOn: Date;
+
 }
