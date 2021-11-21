@@ -12,6 +12,7 @@ import { RolesGuard } from '../guards/roles.guard';
 import { User } from '../models/user.entity';
 import {AuthGuard} from '@nestjs/passport'
 import { JwtAuthGuard } from '../guards/jwtauth.guard';
+import { ChangePasswordDto } from '../dto/change-password.dto';
 
 
 @Controller('auth')
@@ -46,6 +47,12 @@ export class AuthController {
   @Patch('/reset-password')
   resetPassword(@Body() resetPasswordDto: ResetPasswordDto): Promise<void> {
     return this.authService.resetPassword(resetPasswordDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('/change-password')
+  changePassword(@Body() changePasswordDto: ChangePasswordDto): Promise<void> {
+    return this.authService.changePassword(changePasswordDto);
   }
 
 

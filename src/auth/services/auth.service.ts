@@ -15,6 +15,7 @@ import { ActivateUserDto } from '../dto/activate-user.dto';
 import { User } from '../models/user.entity';
 import { RequestResetPasswordDto } from '../dto/request-reset-password.dto';
 import { ResetPasswordDto } from '../dto/reset-password.dto';
+import { ChangePasswordDto } from '../dto/change-password.dto';
 
 
 @Injectable()
@@ -76,6 +77,22 @@ export class AuthService {
     this.userRepository.save(user);
   }
 
+
+  async changePassword(changePasswordDto: ChangePasswordDto): Promise<void> {
+    const { password, newPassword, email } = changePasswordDto;
+    console.log("new password es: " + newPassword)
+    const user = await this.userRepository.findOneByEmail(email);
+    if (await this.encoderService.checkPassword(password, user.password)) {
+      console.log(user)
+      const hashPassword = await this.encoderService.encodePassword(newPassword);
+      user.password = hashPassword;
+      console.log(user)
+       this.userRepository.save(user) 
+    }else{
+
+      throw new UnauthorizedException('Please check your credentials');
+    }
+  }
 
   async findAll(): Promise<User[]> {
     return await this.userRepository.find();
