@@ -10,10 +10,4 @@ export class ChangePasswordDto{
     @Length(6,20)
     newPassword:string;
 
-
-    @IsNotEmpty()
-    @IsEmail()
-    @Length(6,20)
-    email:string;
-
 }

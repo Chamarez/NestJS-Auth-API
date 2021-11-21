@@ -18,6 +18,7 @@ import { ResetPasswordDto } from '../dto/reset-password.dto';
 import { ChangePasswordDto } from '../dto/change-password.dto';
 
 
+
 @Injectable()
 export class AuthService {
 
@@ -78,8 +79,9 @@ export class AuthService {
   }
 
 
-  async changePassword(changePasswordDto: ChangePasswordDto): Promise<void> {
-    const { password, newPassword, email } = changePasswordDto;
+  async changePassword(changePasswordDto: ChangePasswordDto, email:string): Promise<void> {
+    const { password, newPassword} = changePasswordDto;
+    console.log()
     console.log("new password es: " + newPassword)
     const user = await this.userRepository.findOneByEmail(email);
     if (await this.encoderService.checkPassword(password, user.password)) {
