@@ -10,11 +10,9 @@ import { Role } from '../enums/role.enum';
 import { JwtStrategy } from '../guards/jwt.strategy';
 import { RolesGuard } from '../guards/roles.guard';
 import { User } from '../models/user.entity';
-import {AuthGuard} from '@nestjs/passport'
 import { JwtAuthGuard } from '../guards/jwtauth.guard';
 import { ChangePasswordDto } from '../dto/change-password.dto';
-import { DecodeToken } from '../services/decodeToken.service';
-import { JwtPayload } from 'jwt-decode';
+import { GetUser } from '../decorators/get-user.decorator';
 
 
 
@@ -24,7 +22,7 @@ export class AuthController {
   constructor(
     private authService: AuthService,
     private jwtStrategy:JwtStrategy,
-    private decodeToken:DecodeToken
+
     ) {}
 
   @Post('/register')
@@ -59,11 +57,13 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Patch('/change-password')
   changePassword(@Body() changePasswordDto: ChangePasswordDto,
-  @Req() req): Promise<void> {
-    const header = req.headers;
-    const token = {authorization:header.authorization}
-    const {email} = this.decodeToken.extractTokenNow(token.authorization)
-    return this.authService.changePassword(changePasswordDto, email);
+  @GetUser() user:User): Promise<void> {
+try {
+
+  return this.authService.changePassword(changePasswordDto, user.email);
+}catch{
+  throw new NotFoundException('You have to be login ')
+}
   }
 
 
@@ -76,7 +76,7 @@ export class AuthController {
     try {
       return await this.authService.findAll();
     } catch (error) {
-      throw new NotFoundException(`Cannot find products`);
+      throw new NotFoundException(`Cannot find `);
     }
   }
 

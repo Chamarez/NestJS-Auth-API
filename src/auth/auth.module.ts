@@ -10,7 +10,7 @@ import { UserRepository } from './repository/users.repository';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guard';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { DecodeToken } from './services/decodeToken.service';
+
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import { DecodeToken } from './services/decodeToken.service';
     TypeOrmModule.forFeature([UserRepository]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, EncoderService, JwtStrategy, DecodeToken],
+  providers: [AuthService, EncoderService, JwtStrategy],
   exports: [JwtStrategy, PassportModule]
 })
 export class AuthModule {}

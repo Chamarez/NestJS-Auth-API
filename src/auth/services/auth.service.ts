@@ -81,8 +81,6 @@ export class AuthService {
 
   async changePassword(changePasswordDto: ChangePasswordDto, email:string): Promise<void> {
     const { password, newPassword} = changePasswordDto;
-    console.log()
-    console.log("new password es: " + newPassword)
     const user = await this.userRepository.findOneByEmail(email);
     if (await this.encoderService.checkPassword(password, user.password)) {
       console.log(user)
